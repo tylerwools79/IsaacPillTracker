@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+/*
+Have you ever been in the middle of a run and you see a pill in the shop or across some spikes that you know you've seen in this run, but you can't remember if it was a Health Up or a <insert marginally less useful pill here>? I know I have several times, and it bothered me enough that I've written an app in C# to track what pills in what orientation do what for your current run.
+*/
 //possible UPDATES:Curse of the lost tracker, curse of the unknown tracker, Transformations sheet
-//UPDATES FOR SURE: Save and load buttons to populate data grid and save the data grid and asks for the seed as the filename
 namespace Isaac_Pill_Tracker
 {
     public partial class PillTracker : Form
@@ -25,15 +27,6 @@ namespace Isaac_Pill_Tracker
         {            
             InitializeComponent();
         }
-/*
-"48 Hour Energy","Amnesia","Bad Gas","Bad Trip","Balls of Steel","Bombs are Key","Explosive Diarrhea","Full Health","Health Down","Health Up","Hematemesis","I Can See Forever","I Found Pills","Lemon Party","Luck Down","Luck Up","Paralysis","Pheromones","Puberty","Pretty Fly","Range Down","Range Up","R U a Wizard?","Speed Down","Speed Up","Tears Down","Tears Up","Telepills"
-
-Afterbirth:
-"Addicted","Friends Till The End","Infested!","Infested?","One Makes You Small","One Makes You Larger","Percs","Power Pill","Re-Lax","Retro Vision","???"
-
-Afterbirth +:
-"Feels Like I'm Walking On Sunshine!","Gulp!","Horf!","I'm Drowsy","I'm Excited!!!","Something's Wrong...","Vurp!","X-Lax"
-*/
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -102,6 +95,7 @@ Afterbirth +:
             EffectsBx.Text = "";
             orientationBx.Text = "";
             pillSelectBox.Enabled = false;
+            previewBx.Image = emptyBx.Image;
         }
 
         private void Rebirth_Click(object sender, EventArgs e)
@@ -186,7 +180,7 @@ Afterbirth +:
                     AfterbirthPlus_Click(sender, e);
                     break;
             }
-            previewBx.Image = emptyBx.Image;
+            
         }
 
         private void pillSelectBox_DrawItem(object sender, DrawItemEventArgs e)
@@ -596,6 +590,18 @@ Afterbirth +:
             }
             myStream.Close();
         }
+
+        private void PillTracker_ResizeEnd(object sender, EventArgs e)
+        {
+            Pills.Visible = false;
+            Pills.Visible = true;
+        }
+
+        private void Pills_Scroll(object sender, ScrollEventArgs e)
+        {
+            Pills.Visible = false;
+            Pills.Visible = true;
+        }
     }
 
 
@@ -649,139 +655,12 @@ Afterbirth +:
         
     }
 }
-
 /*
-string[] badPills = { "Bad Trip", "Amnesia", "Health Down", "Range Down", "Luck Down", "Tears Down", "Speed Down", "???", "Addicted", "I'm Excited!!!", "Paralysis", "Retro Vision", "R U A Wizard?", "X-Lax" };
-            if (phdChkBx.Checked)
-            {
-                for(int i = 0; i < Pills.Rows.Count-1;i++)
-                {
-                    
-                    switch (Pills.Rows[i].Cells[1].Value.ToString())
-                    {
-                        case "Bad Trip":
-                            Pills.Rows[i].Cells[1].Value = "Balls of Steel";//becomes balls of steel
-                            break;
-                        case "Amnesia":
-                            Pills.Rows[i].Cells[1].Value = "I Can See Forever"; //becomes I can see forever
-                            break;
-                        case "Health Down":
-                            Pills.Rows[i].Cells[1].Value = "Health Up";
-                            break;
-                        case "Range Down":
-                            Pills.Rows[i].Cells[1].Value = "Range Up";
-                            break;
-                        case "Luck Down":
-                            Pills.Rows[i].Cells[1].Value = "Luck Up";
-                            break;
-                        case "Speed Down":
-                            Pills.Rows[i].Cells[1].Value = "Speed Up";
-                            break;
-                        case "Tears Down":
-                            Pills.Rows[i].Cells[1].Value = "Tears Up";
-                            break;
-                        case "???":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Telepills"; //becomes telepills
-                            break;
-                        case "Addicted":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Percs!";//becomes Percs!
-                            break;
-                        case "I'm Excited!!!":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "I'm Drowsy";//becomes I'm drowsy
-                            break;
-                        case "Paralysis":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Pheromones";//becomes pheromones
-                            break;
-                        case "Retro Vision":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "I Can See Forever";//becomes I can see forever
-                            break;
-                        case "R U A Wizard?":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Power Pill";//becomes power pill
-                            break;
-                        case "X-Lax":
-                            if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Something's Wrong...";//becomes somethings wrong
-                            break;
-                        default:
-                            break;
+"48 Hour Energy","Amnesia","Bad Gas","Bad Trip","Balls of Steel","Bombs are Key","Explosive Diarrhea","Full Health","Health Down","Health Up","Hematemesis","I Can See Forever","I Found Pills","Lemon Party","Luck Down","Luck Up","Paralysis","Pheromones","Puberty","Pretty Fly","Range Down","Range Up","R U a Wizard?","Speed Down","Speed Up","Tears Down","Tears Up","Telepills"
 
-                    }
+Afterbirth:
+"Addicted","Friends Till The End","Infested!","Infested?","One Makes You Small","One Makes You Larger","Percs","Power Pill","Re-Lax","Retro Vision","???"
 
-                }
-                for (int i = 0; i < EffectsBx.Items.Count; i++)
-                {
-                    switch (EffectsBx.Items[i].ToString())
-                    {
-                        case "Bad Trip":
-                            EffectsBx.Items.Remove("Bad Trip");//becomes balls of steel
-                            break;
-                        case "Amnesia":
-                            EffectsBx.Items.Remove("Amnesia"); //becomes I can see forever
-                            break;
-                        case "Health Down":
-                            EffectsBx.Items.Remove("Health Down");
-                            break;
-                        case "Range Down":
-                            EffectsBx.Items.Remove("Range Down");
-                            break;
-                        case "Luck Down":
-                            EffectsBx.Items.Remove("Luck Down");
-                            break;
-                        case "Speed Down":
-                            EffectsBx.Items.Remove("Speed Down");
-                            break;
-                        case "Tears Down":
-                            EffectsBx.Items.Remove("Tears Down");
-                            break;
-                        case "???":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("???"); //becomes telepills
-                            break;
-                        case "Addicted":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("Addicted");//becomes Percs!
-                            break;
-                        case "I'm Excited!!!":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("I'm Excited!!!");//becomes I'm drowsy
-                            break;
-                        case "Paralysis":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("Paralysis");//becomes pheromones
-                            break;
-                        case "Retro Vision":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("Retro Vision");//becomes I can see forever
-                            break;
-                        case "R U A Wizard?":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("R U A Wizard?");//becomes power pill
-                            break;
-                        case "X-Lax":
-                            if (resetVal == 2)
-                                EffectsBx.Items.Remove("X-Lax");//becomes somethings wrong
-                            break;
-                        default:
-                            break;
-
-                    }
-                }
-            }
-            else
-            {
-                if (resetVal != 2)
-                    for (int i = 0; i < badPills.Length - 7; i++)
-                        EffectsBx.Items.Add(badPills[i]);
-                else
-                    for (int i = 0; i < badPills.Length; i++)
-                        EffectsBx.Items.Add(badPills[i]);
-
-            }
-        }
+Afterbirth +:
+"Feels Like I'm Walking On Sunshine!","Gulp!","Horf!","I'm Drowsy","I'm Excited!!!","Something's Wrong...","Vurp!","X-Lax"
 */

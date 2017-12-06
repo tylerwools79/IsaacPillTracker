@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PillTracker));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ImageBank = new System.Windows.Forms.PictureBox();
             this.blueBlue = new System.Windows.Forms.PictureBox();
@@ -78,7 +79,6 @@
             this.phdChkBx = new System.Windows.Forms.CheckBox();
             this.previewBx = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.blueBlueV = new System.Windows.Forms.PictureBox();
             this.removeBtn = new System.Windows.Forms.Button();
             this.emptyBx = new System.Windows.Forms.PictureBox();
             this.Pills = new Isaac_Pill_Tracker.transparentDataGrid();
@@ -109,7 +109,6 @@
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewBx)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blueBlueV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptyBx)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pills)).BeginInit();
             this.SuspendLayout();
@@ -123,6 +122,7 @@
             this.ImageBank.Size = new System.Drawing.Size(96, 89);
             this.ImageBank.TabIndex = 0;
             this.ImageBank.TabStop = false;
+            this.ImageBank.Visible = false;
             // 
             // blueBlue
             // 
@@ -275,13 +275,14 @@
             this.EffectsBx.Location = new System.Drawing.Point(86, 40);
             this.EffectsBx.Name = "EffectsBx";
             this.EffectsBx.Size = new System.Drawing.Size(184, 28);
-            this.EffectsBx.TabIndex = 14;
+            this.EffectsBx.TabIndex = 8;
             this.EffectsBx.Text = "effects";
             this.EffectsBx.SelectedValueChanged += new System.EventHandler(this.EffectsBx1_SelectedValueChanged);
             this.EffectsBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EffectsBx1_KeyPress);
             // 
             // pillBx
             // 
+            this.pillBx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pillBx.BackColor = System.Drawing.Color.Transparent;
             this.pillBx.Controls.Add(this.orientationLbl);
             this.pillBx.Controls.Add(this.effectsLbl);
@@ -334,7 +335,7 @@
             this.addBtn.Location = new System.Drawing.Point(410, 40);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(67, 28);
-            this.addBtn.TabIndex = 20;
+            this.addBtn.TabIndex = 10;
             this.addBtn.Text = "Add";
             this.addBtn.UseVisualStyleBackColor = true;
             this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
@@ -351,7 +352,7 @@
             this.orientationBx.Location = new System.Drawing.Point(276, 40);
             this.orientationBx.Name = "orientationBx";
             this.orientationBx.Size = new System.Drawing.Size(128, 28);
-            this.orientationBx.TabIndex = 27;
+            this.orientationBx.TabIndex = 9;
             this.orientationBx.Text = "Orientation";
             this.orientationBx.SelectedIndexChanged += new System.EventHandler(this.orientationBx_SelectedIndexChanged);
             this.orientationBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EffectsBx1_KeyPress);
@@ -379,7 +380,7 @@
             this.pillSelectBox.Location = new System.Drawing.Point(8, 40);
             this.pillSelectBox.Name = "pillSelectBox";
             this.pillSelectBox.Size = new System.Drawing.Size(61, 28);
-            this.pillSelectBox.TabIndex = 28;
+            this.pillSelectBox.TabIndex = 7;
             this.pillSelectBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.pillSelectBox_DrawItem);
             this.pillSelectBox.SelectedIndexChanged += new System.EventHandler(this.pillSelectBox_SelectedIndexChanged);
             // 
@@ -389,7 +390,7 @@
             this.Rebirth.Location = new System.Drawing.Point(6, 21);
             this.Rebirth.Name = "Rebirth";
             this.Rebirth.Size = new System.Drawing.Size(86, 34);
-            this.Rebirth.TabIndex = 16;
+            this.Rebirth.TabIndex = 0;
             this.Rebirth.Text = "Rebirth";
             this.Rebirth.UseVisualStyleBackColor = true;
             this.Rebirth.Click += new System.EventHandler(this.Rebirth_Click);
@@ -400,7 +401,7 @@
             this.Afterbirth.Location = new System.Drawing.Point(98, 21);
             this.Afterbirth.Name = "Afterbirth";
             this.Afterbirth.Size = new System.Drawing.Size(86, 34);
-            this.Afterbirth.TabIndex = 17;
+            this.Afterbirth.TabIndex = 1;
             this.Afterbirth.Text = "Afterbirth";
             this.Afterbirth.UseVisualStyleBackColor = true;
             this.Afterbirth.Click += new System.EventHandler(this.Afterbirth_Click);
@@ -411,7 +412,7 @@
             this.AfterbirthPlus.Location = new System.Drawing.Point(190, 21);
             this.AfterbirthPlus.Name = "AfterbirthPlus";
             this.AfterbirthPlus.Size = new System.Drawing.Size(97, 34);
-            this.AfterbirthPlus.TabIndex = 18;
+            this.AfterbirthPlus.TabIndex = 2;
             this.AfterbirthPlus.Text = "Afterbirth +";
             this.AfterbirthPlus.UseVisualStyleBackColor = true;
             this.AfterbirthPlus.Click += new System.EventHandler(this.AfterbirthPlus_Click);
@@ -435,7 +436,7 @@
             this.clearBtn.Location = new System.Drawing.Point(311, 49);
             this.clearBtn.Name = "clearBtn";
             this.clearBtn.Size = new System.Drawing.Size(86, 34);
-            this.clearBtn.TabIndex = 19;
+            this.clearBtn.TabIndex = 3;
             this.clearBtn.Text = "Clear";
             this.clearBtn.UseVisualStyleBackColor = true;
             this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
@@ -645,7 +646,7 @@
             this.phdChkBx.Location = new System.Drawing.Point(499, 57);
             this.phdChkBx.Name = "phdChkBx";
             this.phdChkBx.Size = new System.Drawing.Size(96, 21);
-            this.phdChkBx.TabIndex = 26;
+            this.phdChkBx.TabIndex = 5;
             this.phdChkBx.Text = "PHD/Virgo";
             this.phdChkBx.UseVisualStyleBackColor = false;
             this.phdChkBx.CheckedChanged += new System.EventHandler(this.phdChkBx_CheckedChanged);
@@ -661,6 +662,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.previewBx);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
@@ -671,23 +673,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pill Preview:";
             // 
-            // blueBlueV
-            // 
-            this.blueBlueV.BackColor = System.Drawing.Color.Transparent;
-            this.blueBlueV.Image = ((System.Drawing.Image)(resources.GetObject("blueBlueV.Image")));
-            this.blueBlueV.Location = new System.Drawing.Point(1001, 155);
-            this.blueBlueV.Name = "blueBlueV";
-            this.blueBlueV.Size = new System.Drawing.Size(25, 24);
-            this.blueBlueV.TabIndex = 33;
-            this.blueBlueV.TabStop = false;
-            this.blueBlueV.Visible = false;
-            // 
             // removeBtn
             // 
             this.removeBtn.Location = new System.Drawing.Point(403, 49);
             this.removeBtn.Name = "removeBtn";
             this.removeBtn.Size = new System.Drawing.Size(86, 34);
-            this.removeBtn.TabIndex = 34;
+            this.removeBtn.TabIndex = 4;
             this.removeBtn.Text = "Remove";
             this.removeBtn.UseVisualStyleBackColor = true;
             this.removeBtn.Click += new System.EventHandler(this.removeBtn_Click);
@@ -704,6 +695,9 @@
             // 
             // Pills
             // 
+            this.Pills.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Pills.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Pills.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Pills.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -711,13 +705,21 @@
             this.effectsCol,
             this.orientationCol,
             this.pillIndex});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Pills.DefaultCellStyle = dataGridViewCellStyle2;
             this.Pills.Location = new System.Drawing.Point(12, 100);
             this.Pills.Name = "Pills";
             this.Pills.RowTemplate.Height = 24;
-            this.Pills.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.Pills.Size = new System.Drawing.Size(490, 492);
-            this.Pills.TabIndex = 27;
+            this.Pills.Size = new System.Drawing.Size(1035, 492);
+            this.Pills.TabIndex = 20;
             this.Pills.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.Pills_RowsAdded);
+            this.Pills.Scroll += new System.Windows.Forms.ScrollEventHandler(this.Pills_Scroll);
             // 
             // pillCol
             // 
@@ -761,7 +763,6 @@
             this.ClientSize = new System.Drawing.Size(1059, 681);
             this.Controls.Add(this.emptyBx);
             this.Controls.Add(this.removeBtn);
-            this.Controls.Add(this.blueBlueV);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Pills);
             this.Controls.Add(this.phdChkBx);
@@ -790,9 +791,13 @@
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(635, 381);
             this.Name = "PillTracker";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Isaac Pill Tracker";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResizeEnd += new System.EventHandler(this.PillTracker_ResizeEnd);
+            this.Resize += new System.EventHandler(this.PillTracker_ResizeEnd);
             ((System.ComponentModel.ISupportInitialize)(this.ImageBank)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueCyan)).EndInit();
@@ -818,7 +823,6 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewBx)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.blueBlueV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptyBx)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Pills)).EndInit();
             this.ResumeLayout(false);
@@ -873,7 +877,6 @@
         private transparentDataGrid Pills;
         private System.Windows.Forms.PictureBox previewBx;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.PictureBox blueBlueV;
         private System.Windows.Forms.Button removeBtn;
         private System.Windows.Forms.PictureBox emptyBx;
         private System.Windows.Forms.ToolStripMenuItem plannedUpdatesToolStripMenuItem;
