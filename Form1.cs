@@ -13,10 +13,10 @@ using System.IO;
 Pitch: Have you ever been in the middle of a run and you see a pill in the shop or across some spikes that you know you've seen in this run, but you can't remember if it was a Health Up or a <insert marginally less useful pill here>? I know I have several times, and it bothered me enough that I've written an app in C# to track what pills in what orientation do what for your current run.
 */
 
-//possible UPDATES:Curse of the lost tracker, curse of the unknown tracker, Transformations sheet 
+//possible UPDATES:Curse of the lost tracker, curse of the unknown tracker
 
-//TODO:
-//DONE: Add something to save and load to open the correct DLC for a run [x]. Reorganize code [x], Also make a quicksave option if they've already saved once[x], also remove the limitation for selecting a pill until you select an orientation[x], add a back end memory bank that will allow you to revert pills to what they were before PhD and Virgo [x], also make tooltips for the other menus because when it's shrunk down you can't read the longer effect names[x], also make save pull from memory rather than the data grid [x], also before you push it look into getting better pics for the rotated pills (the reason they are so bad is because the pixels cant be rotated 45 degrees. you'll need to manually make them in gimp) [x],add a thing that disables pill colors if they aren't in the proper DLC [x] (white-black, black-yellow, white-cyan, and white-yellow were added in afterbirth), got rid of that ugly extra bar at the bottom of the datagrid (comments in the functions in case of bug discovery) add a tooltip thing for the grid over the pills and the effects (if that's not possible at least have an option where it displays the name of the pill and effect if you click it)[x], Add a thing in the save to indicate if the phd/virgo box was checked [x], Added Transformation sheet[x]
+//TODO: remove requirement to select an effect to display preview [], 
+//DONE: fixed bug where the datagrid wouldn't clear if it only had one pill in it. Fixed bug where PhD wouldn't change the last pill in the grid even if it was supposed to
 namespace Isaac_Pill_Tracker
 {
     public partial class PillTracker : Form
@@ -93,7 +93,7 @@ namespace Isaac_Pill_Tracker
             clearBoxes();
             rows = 0;
             
-            for (int i = 0; i < Pills.RowCount-1; i++)
+            for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
             
             //if (PillTracker.ActiveForm != null)
@@ -124,7 +124,7 @@ namespace Isaac_Pill_Tracker
             clearClicked = true;
             clearBoxes();
             rows = 0;
-            for (int i = 0; i < Pills.RowCount-1; i++)
+            for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
             
             //if (PillTracker.ActiveForm != null)
@@ -151,7 +151,7 @@ namespace Isaac_Pill_Tracker
             clearBoxes();
             rows = 0;
 
-            for (int i = 0; i < Pills.RowCount-1; i++)
+            for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
             
             //if (PillTracker.ActiveForm != null)
@@ -180,9 +180,6 @@ namespace Isaac_Pill_Tracker
         /// <param name="e"></param>
         private void clearBtn_Click(object sender, EventArgs e)
         {
-            
-            //clear memory first
-
             switch (resetVal)
             {
                 case 0:
@@ -194,16 +191,14 @@ namespace Isaac_Pill_Tracker
                 case 2:
                     AfterbirthPlus_Click(sender, e);
                     break;
-            }
-            
+            }            
         }
         //DLC selectors and reset handlers end
 
 
         //Validation functions
         /// <summary>
-        /// this function removes effects so that you can't have duplicate effects.
-        /// it will also disable the add button if the pill orientation and color already exists
+        /// this function will disable the add button if the pill orientation and color already exists, thus eliminating duplicates
         /// </summary>
         private void RemoveDups()
         {
@@ -224,9 +219,12 @@ namespace Isaac_Pill_Tracker
         }
         private void validateInput()
         {
-            if (orientationBx.SelectedItem == null || EffectsBx.SelectedItem == null)
-                return;
-            if (pillSelectBox.SelectedIndex != -1 && pillSelectBox.SelectedItem != null && orientationBx.SelectedItem.ToString() != "" && EffectsBx.SelectedItem.ToString() != "" && rows <= MAX_PILLS)
+                if (pillSelectBox.SelectedIndex != -1 && orientationBx.SelectedIndex != -1 && EffectsBx.SelectedIndex == -1)//special case to show the preview even if an effect hasn't been selected
+                getPreview();
+
+            //if (orientationBx.SelectedItem == null || EffectsBx.SelectedItem == null)
+            //    return;
+            if (pillSelectBox.SelectedIndex != -1 && orientationBx.SelectedIndex != -1 && EffectsBx.SelectedIndex != -1 && rows <= MAX_PILLS) 
                 addBtn.Enabled = true;
             else
                 addBtn.Enabled = false;
@@ -239,10 +237,6 @@ namespace Isaac_Pill_Tracker
         }
         private void orientationBx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (orientationBx.SelectedIndex >= 0 && orientationBx.SelectedItem.ToString() != "")
-            //    pillSelectBox.Enabled = true;
-            //else
-            //    pillSelectBox.Enabled = false;
             validateInput();
         }
         private void EffectsBx_SelectedValueChanged(object sender, EventArgs e)
@@ -260,14 +254,11 @@ namespace Isaac_Pill_Tracker
         /// <param name="e"></param>
         private void phdChkBx_CheckedChanged(object sender, EventArgs e)
         {
-
-            //if( == true)
-            //phdChkBx.Click = true;
             //make it so it doen't call this if it's cleared or a different thing. change event listener to click (This is a non-issue now I think)
             string[] badPills = { "Bad Trip", "Amnesia", "Health Down", "Range Down", "Luck Down", "Tears Down", "Speed Down", "???", "Addicted", "I'm Excited!!!", "Paralysis", "Retro Vision", "R U a Wizard?", "X-Lax" };
             if (phdChkBx.Checked)
             {
-                for (int i = 0; i < Pills.Rows.Count - 1; i++)
+                for (int i = 0; i < Pills.Rows.Count; i++)
                 {
 
                     switch (Pills.Rows[i].Cells[1].Value.ToString())
@@ -715,30 +706,31 @@ namespace Isaac_Pill_Tracker
         //Refresh and render functions
         private void getPreview()
         {
-            if (addBtn.Enabled == true)
+            int pill = pillSelectBox.SelectedIndex;
+            string orientation = (string)orientationBx.SelectedItem;
+            if (pill == -1 || orientation == null)
             {
-                int pill = pillSelectBox.SelectedIndex;
-                string orientation = (string)orientationBx.SelectedItem;
-                switch (orientation)
-                {
-                    case "Normal":
-                        previewBx.Image = imageList1.Images[pill];
-                        break;
-                    case "Reverse":
-                        previewBx.Image = imageListR.Images[pill];
-                        break;
-                    case "Horizontal":
-                        previewBx.Image = imageListH.Images[pill];
-                        break;
-                    case "Vertical":
-                        previewBx.Image = imageListV.Images[pill];
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
                 previewBx.Image = emptyBx.Image;
+                return;
+            }
+            switch (orientation)
+            {
+                case "Normal":
+                    previewBx.Image = imageList1.Images[pill];
+                    break;
+                case "Reverse":
+                    previewBx.Image = imageListR.Images[pill];
+                    break;
+                case "Horizontal":
+                    previewBx.Image = imageListH.Images[pill];
+                    break;
+                case "Vertical":
+                    previewBx.Image = imageListV.Images[pill];
+                    break;
+                default:
+                    break;
+            }
+
         }
         private void Pills_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
