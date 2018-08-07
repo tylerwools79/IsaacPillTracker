@@ -15,8 +15,8 @@ Pitch: Have you ever been in the middle of a run and you see a pill in the shop 
 
 //possible UPDATES:Curse of the lost tracker, curse of the unknown tracker
 
-//TODO: remove requirement to select an effect to display preview [], 
-//DONE: fixed bug where the datagrid wouldn't clear if it only had one pill in it. Fixed bug where PhD wouldn't change the last pill in the grid even if it was supposed to
+//TODO:
+//DONE: remove requirement to select an effect to display preview [x], fixed bug where the datagrid wouldn't clear if it only had one pill in it. Fixed bug where PhD wouldn't change the last pill in the grid even if it was supposed to
 namespace Isaac_Pill_Tracker
 {
     public partial class PillTracker : Form
@@ -417,7 +417,7 @@ namespace Isaac_Pill_Tracker
                         for (int i = 0; i < badPills.Length; i++)
                             EffectsBx.Items.Add(badPills[i]);
 
-                    for (int i = 0; i < Pills.Rows.Count - 1; i++)
+                    for (int i = 0; i < Pills.Rows.Count; i++)
                     {
                         string temp = memory[i].Split(',')[0];
                         if (Pills.Rows[i].Cells[1].Value.ToString() != temp)
