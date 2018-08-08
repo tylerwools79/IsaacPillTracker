@@ -15,8 +15,9 @@ Pitch: Have you ever been in the middle of a run and you see a pill in the shop 
 
 //possible UPDATES:Curse of the lost tracker, curse of the unknown tracker
 
-//TODO:
-//DONE: remove requirement to select an effect to display preview [x], fixed bug where the datagrid wouldn't clear if it only had one pill in it. Fixed bug where PhD wouldn't change the last pill in the grid even if it was supposed to
+//TODO: 
+//DONE: fixed issue where the stream didn't close if the load failed,change the save thing to not have a click and add a quicksave ribbon option, double clicking save invokes quicksave, added hotkey shortcuts to save, saveas, load, and transformation sheets, and floor tracker
+
 namespace Isaac_Pill_Tracker
 {
     public partial class PillTracker : Form
@@ -513,16 +514,44 @@ namespace Isaac_Pill_Tracker
             msg += "\nSaving: it is recommended that you name your files after the seed of your run, and it is advisable to create a designated folder for saving.\nDefault save location is your documents folder.\n\n";
 
             msg += "When you die, just click the clear button to reset the pills and effects. Have fun!";
-            msg += "";
+            msg += "\n\nHOTKEYS:\nCTRL+S\tQuicksave\nCTRL+SHIFT+S\tSave As\nCTRL+D\tLoad\nCTRL+T\tTransformation Sheet\nCTRL+F\tFloor Tracker\n";
             MessageBox.Show(msg);
         }
         private void plannedUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Future updates include: \n>a tracker for curse of the unknown (Health tracker)\t- submitted by reddit user /u/nitronomer\n>a tracker for curse of the lost (map builder)\t- submitted by reddit user /u/nitronomer\n");
         }
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void quicksaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //accuMem();//actually is this even necessary since I'm adding it at every add button push?
+            
+            if (savePath == "")
+            {
+                saveAsToolStripMenuItem_Click(sender, e);
+            }
+            else
+            {
+                SaveFileDialog toSave = new SaveFileDialog();
+                Stream myStream = null;
+                toSave.FileName = savePath;
+                if ((myStream = toSave.OpenFile()) != null)
+                {
+                    StreamWriter data = new StreamWriter(myStream);
+                    data.WriteLine(resetVal);
+                    data.WriteLine(phdChkBx.Checked ? 1 : 0);
+                    for (int i = 0; i < memory.Count; i++)
+                    {
+                        data.Write(memory[i]);
+                    }
+                    data.Close();
+                }
+                MessageBox.Show("Save Successful!");
+                myStream.Close();
+            }
+        }
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            savePath = "";
+
             SaveFileDialog toSave = new SaveFileDialog();
             Stream myStream = null;
             toSave.Filter = "data files (*.dat) |*.dat";
@@ -547,28 +576,10 @@ namespace Isaac_Pill_Tracker
                     }
                 }
             }
-            else
-            {
-                toSave.FileName = savePath;
-                if ((myStream = toSave.OpenFile()) != null)
-                {
-                    StreamWriter data = new StreamWriter(myStream);
-                    data.WriteLine(resetVal);
-                    data.WriteLine(phdChkBx.Checked ? 1 : 0);
-                    for (int i = 0; i < memory.Count; i++)
-                    {
-                        data.Write(memory[i]);
-                    }
-                    data.Close();
-                }
-                MessageBox.Show("Save Successful!");
-                myStream.Close();
-            }            
         }
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveToolStripMenuItem_DoubleClick(object sender, EventArgs e)
         {
-            savePath = "";
-            saveAsToolStripMenuItem_Click(sender, e);
+            quicksaveToolStripMenuItem_Click(sender, e);
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -596,6 +607,8 @@ namespace Isaac_Pill_Tracker
                         else
                         {
                             MessageBox.Show("Something went wrong while attempting to load. Please report this error.\nContact information can be found in the \"About\" menu tab");
+                            data.Close();
+                            myStream.Close();
                             return;
                         }
                         bool checkPHD = false;
@@ -698,7 +711,7 @@ namespace Isaac_Pill_Tracker
         /// <param name="e"></param>
         private void floorTrackerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(UNFINISHED_FEATURE);
+            MessageBox.Show(UNFINISHED_FEATURE,"Curse of the Lost Floor Tracker");
         }
         //Toolstrip functions end
 

@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PillTracker));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ImageBank = new System.Windows.Forms.PictureBox();
             this.blueBlue = new System.Windows.Forms.PictureBox();
             this.blueCyan = new System.Windows.Forms.PictureBox();
@@ -70,6 +70,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quicksaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transformationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,7 +88,6 @@
             this.effectsCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orientationCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pillIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBank)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueCyan)).BeginInit();
@@ -590,18 +591,41 @@
             // 
             // saveToolStripMenuItem
             // 
+            this.saveToolStripMenuItem.DoubleClickEnabled = true;
             this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quicksaveToolStripMenuItem,
             this.saveAsToolStripMenuItem});
             this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(52, 24);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem.DoubleClick += new System.EventHandler(this.saveToolStripMenuItem_DoubleClick);
+            // 
+            // quicksaveToolStripMenuItem
+            // 
+            this.quicksaveToolStripMenuItem.Name = "quicksaveToolStripMenuItem";
+            this.quicksaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.quicksaveToolStripMenuItem.ShowShortcutKeys = false;
+            this.quicksaveToolStripMenuItem.Size = new System.Drawing.Size(225, 26);
+            this.quicksaveToolStripMenuItem.Text = "Quicksave";
+            this.quicksaveToolStripMenuItem.Click += new System.EventHandler(this.quicksaveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.ShowShortcutKeys = false;
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.loadToolStripMenuItem.ShowShortcutKeys = false;
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(54, 24);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
@@ -619,14 +643,18 @@
             // transformationsToolStripMenuItem
             // 
             this.transformationsToolStripMenuItem.Name = "transformationsToolStripMenuItem";
-            this.transformationsToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.transformationsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.transformationsToolStripMenuItem.ShowShortcutKeys = false;
+            this.transformationsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.transformationsToolStripMenuItem.Text = "Transformations";
             this.transformationsToolStripMenuItem.Click += new System.EventHandler(this.transformationsToolStripMenuItem_Click);
             // 
             // floorTrackerToolStripMenuItem
             // 
             this.floorTrackerToolStripMenuItem.Name = "floorTrackerToolStripMenuItem";
-            this.floorTrackerToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.floorTrackerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.floorTrackerToolStripMenuItem.ShowShortcutKeys = false;
+            this.floorTrackerToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.floorTrackerToolStripMenuItem.Text = "Floor Tracker";
             this.floorTrackerToolStripMenuItem.Click += new System.EventHandler(this.floorTrackerToolStripMenuItem_Click);
             // 
@@ -708,14 +736,14 @@
             this.effectsCol,
             this.orientationCol,
             this.pillIndex});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Pills.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Pills.DefaultCellStyle = dataGridViewCellStyle4;
             this.Pills.Location = new System.Drawing.Point(12, 100);
             this.Pills.Name = "Pills";
             this.Pills.RowTemplate.Height = 24;
@@ -739,8 +767,8 @@
             // effectsCol
             // 
             this.effectsCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.effectsCol.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.effectsCol.DefaultCellStyle = dataGridViewCellStyle3;
             this.effectsCol.HeaderText = "Effect";
             this.effectsCol.Name = "effectsCol";
             this.effectsCol.ReadOnly = true;
@@ -759,13 +787,6 @@
             this.pillIndex.Name = "pillIndex";
             this.pillIndex.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.pillIndex.Visible = false;
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // PillTracker
             // 
@@ -899,6 +920,7 @@
         private System.Windows.Forms.ToolStripMenuItem transformationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem floorTrackerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quicksaveToolStripMenuItem;
     }
 }
 
