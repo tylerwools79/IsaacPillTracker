@@ -9,14 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-/*
-Pitch: Have you ever been in the middle of a run and you see a pill in the shop or across some spikes that you know you've seen in this run, but you can't remember if it was a Health Up or a <insert marginally less useful pill here>? I know I have several times, and it bothered me enough that I've written an app in C# to track what pills in what orientation do what for your current run.
-*/
-
-//possible UPDATES:Curse of the lost tracker, curse of the unknown tracker
-
-//TODO: 
-//DONE: fixed issue where the stream didn't close if the load failed,change the save thing to not have a click and add a quicksave ribbon option, double clicking save invokes quicksave, added hotkey shortcuts to save, saveas, load, and transformation sheets, and floor tracker
 
 namespace Isaac_Pill_Tracker
 {
@@ -24,8 +16,8 @@ namespace Isaac_Pill_Tracker
     {
         private string[] dlcPills = { "blackWhite", "blackYellow", "whiteCyan", "whiteYellow" };
         private string[] rebirth = { "48 Hour Energy", "Amnesia", "Bad Gas", "Bad Trip", "Balls of Steel", "Bombs are Key", "Explosive Diarrhea", "Full Health", "Health Down", "Health Up", "Hematemesis", "I Can See Forever", "I Found Pills", "Lemon Party", "Luck Down", "Luck Up", "Paralysis", "Pheromones", "Puberty", "Pretty Fly", "Range Down", "Range Up", "R U a Wizard?", "Speed Down", "Speed Up", "Tears Down", "Tears Up", "Telepills" };
-        private string[] afterbirth = { "48 Hour Energy", "Amnesia", "Bad Gas", "Bad Trip", "Balls of Steel", "Bombs are Key", "Explosive Diarrhea", "Full Health", "Health Down", "Health Up", "Hematemesis", "I Can See Forever", "I Found Pills", "Lemon Party", "Luck Down", "Luck Up", "Paralysis", "Pheromones", "Puberty", "Pretty Fly", "Range Down", "Range Up", "R U a Wizard?", "Speed Down", "Speed Up", "Tears Down", "Tears Up", "Telepills", "Addicted", "Friends Till The End", "Infested!", "Infested?", "One Makes You Small", "One Makes You Larger", "Percs", "Power Pill", "Re-Lax", "Retro Vision", "???" };
-        private string[] afterbirthPlus = { "48 Hour Energy", "Amnesia", "Bad Gas", "Bad Trip", "Balls of Steel", "Bombs are Key", "Explosive Diarrhea", "Full Health", "Health Down", "Health Up", "Hematemesis", "I Can See Forever", "I Found Pills", "Lemon Party", "Luck Down", "Luck Up", "Paralysis", "Pheromones", "Puberty", "Pretty Fly", "Range Down", "Range Up", "R U a Wizard?", "Speed Down", "Speed Up", "Tears Down", "Tears Up", "Telepills", "Addicted", "Friends Till The End", "Infested!", "Infested?", "One Makes You Small", "One Makes You Larger", "Percs", "Power Pill", "Re-Lax", "Retro Vision", "???", "Feels Like I'm Walking On Sunshine!", "Gulp!", "Horf!", "I'm Drowsy", "I'm Excited!!!", "Something's Wrong...", "Vurp!", "X-Lax" };
+        private string[] afterbirth = { "48 Hour Energy", "Amnesia", "Bad Gas", "Bad Trip", "Balls of Steel", "Bombs are Key", "Explosive Diarrhea", "Full Health", "Health Down", "Health Up", "Hematemesis", "I Can See Forever", "I Found Pills", "Lemon Party", "Luck Down", "Luck Up", "Paralysis", "Pheromones", "Puberty", "Pretty Fly", "Range Down", "Range Up", "R U a Wizard?", "Speed Down", "Speed Up", "Tears Down", "Tears Up", "Telepills", "Addicted", "Friends Till The End", "Infested!", "Infested?", "One Makes You Small", "One Makes You Larger", "Percs", "Power Pill!", "Re-Lax", "Retro Vision", "???" };
+        private string[] afterbirthPlus = { "48 Hour Energy", "Amnesia", "Bad Gas", "Bad Trip", "Balls of Steel", "Bombs are Key", "Explosive Diarrhea", "Full Health", "Health Down", "Health Up", "Hematemesis", "I Can See Forever", "I Found Pills", "Lemon Party", "Luck Down", "Luck Up", "Paralysis", "Pheromones", "Puberty", "Pretty Fly", "Range Down", "Range Up", "R U a Wizard?", "Speed Down", "Speed Up", "Tears Down", "Tears Up", "Telepills", "Addicted", "Friends Till The End", "Infested!", "Infested?", "One Makes You Small", "One Makes You Larger", "Percs", "Power Pill!", "Re-Lax", "Retro Vision", "???", "Feels Like I'm Walking On Sunshine!", "Gulp!", "Horf!", "I'm Drowsy", "I'm Excited!!!", "Something's Wrong...", "Vurp!", "X-Lax" };
         private string savePath = "";
         private const string UNFINISHED_FEATURE = "This feature is still in development!\nUnfortunately this feature is not available yet. As soon as I finish it I will upload it to the github page.\nThank you for your support and patience!\n    -Tyler";
         private List<string> memory = new List<string>();
@@ -41,10 +33,6 @@ namespace Isaac_Pill_Tracker
 
         private void PillTracker_Load(object sender, EventArgs e)
         {
-            //textBox1.Text = pillSelectBox.SelectedItem.ToString();
-            //clearBoxes();
-            //Rebirth_Click(sender, e);//this is causing the error
-            //addBtn.Enabled = true;
             rows = 0;
             clearBoxes();
             for (int i = 0; i < rebirth.Length; i++)
@@ -52,7 +40,6 @@ namespace Isaac_Pill_Tracker
                 EffectsBx.Items.Add(rebirth[i]);
             }
             resetVal = 0;
-            //this.Pills.BorderStyle = BorderStyle.None; //this is causing an error and/or not working when running from the .exe
         }
         
         /// <summary>
@@ -62,7 +49,7 @@ namespace Isaac_Pill_Tracker
         private void accuMem()
         {
             int j = 0;
-            while (j < Pills.Rows.Count)//.Lines.Count()) //copies what's in the edit window into a new string list for saving
+            while (j < Pills.Rows.Count)
             {
                 string temp = Pills.Rows[j].Cells[1].Value.ToString();//effect
                 temp += "," + Pills.Rows[j].Cells[2].Value.ToString();//orientation
@@ -83,9 +70,7 @@ namespace Isaac_Pill_Tracker
             EffectsBx.Text = "";
             orientationBx.Text = "";
             orientationBx.SelectedIndex = -1;
-            //pillSelectBox.Enabled = false;
             previewBx.Image = emptyBx.Image;
-
             pillSelectBox.SelectedIndex = -1;
         }
         private void Rebirth_Click(object sender, EventArgs e)
@@ -97,8 +82,6 @@ namespace Isaac_Pill_Tracker
             for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
             
-            //if (PillTracker.ActiveForm != null)
-            //    PillTracker.ActiveForm.BackgroundImage = rebirthPx.BackgroundImage;
             this.BackgroundImage = rebirthPx.BackgroundImage;
             EffectsBx.Items.Clear();
             
@@ -109,11 +92,6 @@ namespace Isaac_Pill_Tracker
                 for (int i = 12; i > 8; i--)
                     if (dlcPills.Any(pillSelectBox.Items[i].ToString().Contains))
                         pillSelectBox.Items.RemoveAt(i);
-
-            //string curpill = pillSelectBox.Items[i].ToString();
-            //if (curpill==dlcPills[0]|| curpill == dlcPills[1]|| curpill == dlcPills[2]|| curpill == dlcPills[3])
-
-
 
             resetVal = 0;
             savePath = "";
@@ -127,9 +105,7 @@ namespace Isaac_Pill_Tracker
             rows = 0;
             for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
-            
-            //if (PillTracker.ActiveForm != null)
-            //    PillTracker.ActiveForm.BackgroundImage = afterbirthPx.BackgroundImage;
+
             this.BackgroundImage = afterbirthPx.BackgroundImage;
             EffectsBx.Items.Clear();
             
@@ -154,10 +130,7 @@ namespace Isaac_Pill_Tracker
 
             for (int i = 0; i < Pills.RowCount; i++)
                 Pills.Rows.Clear();
-            
-            //if (PillTracker.ActiveForm != null)
-            //    PillTracker.ActiveForm.BackgroundImage = afterbirthplusPx.BackgroundImage;
-            //alternatively
+
             this.BackgroundImage = afterbirthplusPx.BackgroundImage;
             EffectsBx.Items.Clear();
             
@@ -206,7 +179,7 @@ namespace Isaac_Pill_Tracker
             if (rows > 0)
             {
                 int pill = pillSelectBox.SelectedIndex;
-                //System.Drawing.Image pill = imageList1.Images[pillSelectBox.SelectedIndex];//why aren't I basing this off of the selected index?
+                
                 string effect = (string)EffectsBx.SelectedItem;
                 string orientation = (string)orientationBx.SelectedItem;
                 for (int i = 0; i <= Pills.Rows.Count-1; i++)//used to be just < in case of horrible bug caused by data grid row
@@ -216,21 +189,17 @@ namespace Isaac_Pill_Tracker
                 }
             }
             getPreview();
-
         }
         private void validateInput()
         {
-                if (pillSelectBox.SelectedIndex != -1 && orientationBx.SelectedIndex != -1 && EffectsBx.SelectedIndex == -1)//special case to show the preview even if an effect hasn't been selected
+            if (pillSelectBox.SelectedIndex != -1 && orientationBx.SelectedIndex != -1 && EffectsBx.SelectedIndex == -1)//special case to show the preview even if an effect hasn't been selected
                 getPreview();
 
-            //if (orientationBx.SelectedItem == null || EffectsBx.SelectedItem == null)
-            //    return;
             if (pillSelectBox.SelectedIndex != -1 && orientationBx.SelectedIndex != -1 && EffectsBx.SelectedIndex != -1 && rows <= MAX_PILLS) 
                 addBtn.Enabled = true;
             else
                 addBtn.Enabled = false;
             RemoveDups();
-
         }
         private void pillSelectBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -255,7 +224,6 @@ namespace Isaac_Pill_Tracker
         /// <param name="e"></param>
         private void phdChkBx_CheckedChanged(object sender, EventArgs e)
         {
-            //make it so it doen't call this if it's cleared or a different thing. change event listener to click (This is a non-issue now I think)
             string[] badPills = { "Bad Trip", "Amnesia", "Health Down", "Range Down", "Luck Down", "Tears Down", "Speed Down", "???", "Addicted", "I'm Excited!!!", "Paralysis", "Retro Vision", "R U a Wizard?", "X-Lax" };
             if (phdChkBx.Checked)
             {
@@ -307,7 +275,7 @@ namespace Isaac_Pill_Tracker
                             break;
                         case "R U a Wizard?":
                             if (resetVal == 2)
-                                Pills.Rows[i].Cells[1].Value = "Power Pill";//becomes power pill
+                                Pills.Rows[i].Cells[1].Value = "Power Pill!";//becomes Power Pill!
                             break;
                         case "X-Lax":
                             if (resetVal == 2)
@@ -390,7 +358,7 @@ namespace Isaac_Pill_Tracker
                         case "R U a Wizard?":
                             if (resetVal == 2)
                             {
-                                EffectsBx.Items.Remove("R U a Wizard?");//becomes power pill
+                                EffectsBx.Items.Remove("R U a Wizard?");//becomes Power Pill!
                                 i--;
                             }
                             break;
@@ -438,12 +406,10 @@ namespace Isaac_Pill_Tracker
 
             if (orientation == "Normal")
             {
-                // Pills.Rows.Add(blueBlue.Image, effect, orientation, pill);
                 Pills.Rows.Add(imageList1.Images[pill], effect, orientation, pill);
             }
             else if (orientation == "Vertical")
             {
-                // Pills.Rows.Add(pictureBox1.Image, effect, orientation, pill);
                 Pills.Rows.Add(imageListV.Images[pill], effect, orientation, pill);
             }
             else if (orientation == "Reverse")
@@ -473,14 +439,13 @@ namespace Isaac_Pill_Tracker
             orientationBx.SelectedIndex = -1;
             orientationBx.Text = "";
             return;
-
         }
         private void removeBtn_Click(object sender, EventArgs e)
         {
-            if (Pills.CurrentRow.Index <= Pills.Rows.Count-1)//used to just be < in case of horrible bug
+            if (Pills.CurrentRow.Index <= Pills.Rows.Count-1)
             {
                 rows--;
-                memory.RemoveAt(Pills.CurrentRow.Index); //in theory removes the pill from memory.
+                memory.RemoveAt(Pills.CurrentRow.Index); 
                 Pills.Rows.RemoveAt(Pills.CurrentRow.Index);
                 
 
@@ -555,8 +520,6 @@ namespace Isaac_Pill_Tracker
             SaveFileDialog toSave = new SaveFileDialog();
             Stream myStream = null;
             toSave.Filter = "data files (*.dat) |*.dat";
-            //System.IO.Directory.CreateDirectory("BOI_Pills/");
-            //toSave.InitialDirectory = "BOI_Pills/";
             if (savePath == "")
             {
                 if (toSave.ShowDialog() == DialogResult.OK)
@@ -583,19 +546,16 @@ namespace Isaac_Pill_Tracker
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //has initial directory
             string openFilter = "data files (*.dat)|*dat";
-            //Stream myStream = null;
             OpenFileDialog toOpen = new OpenFileDialog();
-            //define file extensions to show in the dialog
-            //toOpen.InitialDirectory ="BOI_Pills/";
+
             toOpen.Filter = openFilter;
             Stream myStream = null;
             string entry;
-            //toOpen.ShowDialog();
+
             //check if operation worked
             try {
-                if (toOpen.ShowDialog() == DialogResult.OK)// this is failing, check your browser for a webpage of someone who has the same problem but the site is blocked on alpine. I have no idea why this began happening though
+                if (toOpen.ShowDialog() == DialogResult.OK)
                 {
                     if ((myStream = toOpen.OpenFile()) != null)
                     {
@@ -603,7 +563,7 @@ namespace Isaac_Pill_Tracker
                         StreamReader data = new StreamReader(myStream);
                         int i = 0;
                         if (int.TryParse(data.ReadLine(), out resetVal)) //this will process the resetVal saved at the very top of the file.
-                            clearBtn_Click(sender, e); //should load proper DLC
+                            clearBtn_Click(sender, e); //should load proper dlc and clear out anything in the grid currently
                         else
                         {
                             MessageBox.Show("Something went wrong while attempting to load. Please report this error.\nContact information can be found in the \"About\" menu tab");
@@ -625,7 +585,7 @@ namespace Isaac_Pill_Tracker
                         do
                         {
                             entry = data.ReadLine();
-                            if (entry == null)//||entry == "")
+                            if (entry == null)
                                 break;
                             string[] newPill = entry.Split(',');
                             if (newPill.Length == 1)//no split was made
@@ -659,12 +619,10 @@ namespace Isaac_Pill_Tracker
 
                             if (newPill[1] == "Normal")
                             {
-                                // Pills.Rows.Add(blueBlue.Image, effect, orientation, pill);
                                 Pills.Rows.Add(imageList1.Images[int.Parse(newPill[2])], newPill[0], newPill[1], int.Parse(newPill[2]));
                             }
                             else if (newPill[1] == "Vertical")
                             {
-                                // Pills.Rows.Add(pictureBox1.Image, effect, orientation, pill);
                                 Pills.Rows.Add(imageListV.Images[int.Parse(newPill[2])], newPill[0], newPill[1], int.Parse(newPill[2]));
                             }
                             else if (newPill[1] == "Reverse")
@@ -743,17 +701,9 @@ namespace Isaac_Pill_Tracker
                 default:
                     break;
             }
-
         }
         private void Pills_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            //previous code in case of horrible bug discovery
-            //if (!clearClicked)
-            //{
-            //    rows++;
-            //    Pills.CurrentCell = Pills.Rows[rows].Cells[0];
-            //}
-
             if (!clearClicked)
             {
                 
@@ -773,7 +723,7 @@ namespace Isaac_Pill_Tracker
                 e.DrawFocusRectangle();
                 e.Graphics.DrawImage(imageList1.Images[e.Index], new PointF(e.Bounds.X, e.Bounds.Y));
             }
-            else if (resetVal == 0 && e.Index > -1 && imageList1.Images.Count - 5 >= e.Index)//This keeps it from drawing the last 4 pills, still leaves empty spaces without the code in the resets though
+            else if (resetVal == 0 && e.Index > -1 && imageList1.Images.Count - 5 >= e.Index)//This keeps it from drawing the last 4 pills
             {
                 e.DrawBackground();
                 e.DrawFocusRectangle();
@@ -784,14 +734,10 @@ namespace Isaac_Pill_Tracker
         private void PillTracker_ResizeEnd(object sender, EventArgs e)
         {
             Pills.Refresh();
-            //Pills.Visible = false;
-            //Pills.Visible = true;
         }
         private void Pills_Scroll(object sender, ScrollEventArgs e)
         {
             Pills.Refresh();
-            //Pills.Visible = false;
-            //Pills.Visible = true;
         }
         //Refresh and render functions end
 
@@ -915,9 +861,6 @@ namespace Isaac_Pill_Tracker
             else
             {
                 string effect = (string)EffectsBx.SelectedItem;
-                //if (EffectsBx.Focus() == true)
-                //    if (effect != EffectsBx.SelectedText)
-                //        effect = EffectsBx.SelectedText;
                 this.toolTip1.Show(effect, EffectsBx);
             }
         }
@@ -928,10 +871,10 @@ namespace Isaac_Pill_Tracker
         /// <param name="e"></param>
         private void Pills_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if(e.RowIndex <= rows)//used to just be < in case of horrible data grid bug discovery
+            if(e.RowIndex <= rows)
             {
                 var cell = Pills.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                if (e.ColumnIndex == Pills.Columns[0].Index)//this should be the image column
+                if (e.ColumnIndex == Pills.Columns[0].Index)//this is the image column
                 {
                     int pIndex = (int)Pills.Rows[e.RowIndex].Cells[3].Value;//the pill index for the image from the hidden imgIndex column of the datagrid
                     cell.ToolTipText = $"{ pillTooltipHelper(pIndex.ToString())}";
@@ -950,7 +893,6 @@ namespace Isaac_Pill_Tracker
     /// </summary>
     public partial class transparentDataGrid : System.Windows.Forms.DataGridView
     {
-
         public transparentDataGrid() { }
 
         protected override void PaintBackground(Graphics graphics, Rectangle clipBounds, Rectangle gridBounds)
@@ -962,48 +904,9 @@ namespace Isaac_Pill_Tracker
 
             Bitmap b = new Bitmap(Parent.ClientRectangle.Width, Parent.ClientRectangle.Height);
             Graphics.FromImage(b).DrawImage(this.Parent.BackgroundImage, Parent.ClientRectangle);
-            //this.BorderStyle
 
             graphics.DrawImage(b, rectDest, rectSource, GraphicsUnit.Pixel);
 
-        }
-        //protected override void PaintBackground(Graphics graphics, Rectangle clipBounds, Rectangle gridBounds)
-        //{
-        //    base.PaintBackground(graphics, clipBounds, gridBounds);
-        //    Rectangle rectSource = new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height);
-        //    Rectangle rectDest = new Rectangle(0, 0, rectSource.Width, rectSource.Height);
-
-        //    Bitmap b = new Bitmap(Parent.ClientRectangle.Width, Parent.ClientRectangle.Height);
-        //    Graphics.FromImage(b).DrawImage(this.Parent.BackgroundImage, Parent.ClientRectangle);
-
-
-        //    graphics.DrawImage(b, rectDest, rectSource, GraphicsUnit.Pixel);
-        //    SetCellsTransparent();
-        //}
-
-
-        //public void SetCellsTransparent()
-        //{
-        //    this.EnableHeadersVisualStyles = false;
-        //    this.ColumnHeadersDefaultCellStyle.BackColor = Color.Transparent;
-        //    this.RowHeadersDefaultCellStyle.BackColor = Color.Transparent;
-
-
-        //    foreach (DataGridViewColumn col in this.Columns)
-        //    {
-        //        col.DefaultCellStyle.BackColor = Color.Transparent;
-        //        col.DefaultCellStyle.SelectionBackColor = Color.Transparent;
-        //    }
-        //}
-        
+        }        
     }
 }
-/*
-"48 Hour Energy","Amnesia","Bad Gas","Bad Trip","Balls of Steel","Bombs are Key","Explosive Diarrhea","Full Health","Health Down","Health Up","Hematemesis","I Can See Forever","I Found Pills","Lemon Party","Luck Down","Luck Up","Paralysis","Pheromones","Puberty","Pretty Fly","Range Down","Range Up","R U a Wizard?","Speed Down","Speed Up","Tears Down","Tears Up","Telepills"
-
-Afterbirth:
-"Addicted","Friends Till The End","Infested!","Infested?","One Makes You Small","One Makes You Larger","Percs","Power Pill","Re-Lax","Retro Vision","???"
-
-Afterbirth +:
-"Feels Like I'm Walking On Sunshine!","Gulp!","Horf!","I'm Drowsy","I'm Excited!!!","Something's Wrong...","Vurp!","X-Lax"
-*/

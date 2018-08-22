@@ -195,6 +195,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Isaac Transformation Sheet";
             this.Load += new System.EventHandler(this.TransForm_Load);
+            this.Resize += new System.EventHandler(this.TransForm_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Transformations)).EndInit();

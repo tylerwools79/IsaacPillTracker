@@ -169,6 +169,11 @@ namespace Isaac_Pill_Tracker
 
             MessageBox.Show(message);
         }
+
+        private void TransForm_Resize(object sender, EventArgs e)
+        {
+            Transformations.Refresh();
+        }
     }
 
 
