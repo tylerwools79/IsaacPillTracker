@@ -1,1 +1,2 @@
 # IsaacPillTracker
+Have you ever been in the middle of a run and you see a pill in the shop or across some spikes or in the shop that you know you've seen in this run, but you can't remember if it was a Health Up or a <insert marginally less useful pill here>? I know I have several times, and it bothered me enough that I've written an app in C# to track what pills in what orientation do what for your current run.
