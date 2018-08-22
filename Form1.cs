@@ -520,25 +520,24 @@ namespace Isaac_Pill_Tracker
             SaveFileDialog toSave = new SaveFileDialog();
             Stream myStream = null;
             toSave.Filter = "data files (*.dat) |*.dat";
-            if (savePath == "")
+
+            if (toSave.ShowDialog() == DialogResult.OK)
             {
-                if (toSave.ShowDialog() == DialogResult.OK)
+                if ((myStream = toSave.OpenFile()) != null)
                 {
-                    if ((myStream = toSave.OpenFile()) != null)
+                    savePath = toSave.FileName;
+                    //create streamwriter object
+                    StreamWriter data = new StreamWriter(myStream);
+                    data.WriteLine(resetVal);                       //this will save which DLC was used
+                    data.WriteLine(phdChkBx.Checked ? 1 : 0);
+                    for (int i = 0; i < memory.Count; i++)
                     {
-                        savePath = toSave.FileName;
-                        //create streamwriter object
-                        StreamWriter data = new StreamWriter(myStream);
-                        data.WriteLine(resetVal);                       //this will save which DLC was used
-                        data.WriteLine(phdChkBx.Checked ? 1 : 0);
-                        for (int i = 0; i < memory.Count; i++)
-                        {
-                            data.Write(memory[i]);
-                        }
-                        data.Close();
+                        data.Write(memory[i]);
                     }
+                    data.Close();
                 }
             }
+            myStream.Close();
         }
         private void saveToolStripMenuItem_DoubleClick(object sender, EventArgs e)
         {
